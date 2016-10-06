@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Configuration</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="../../../resources/css/bootstrap.min.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/bootstrap.min.css}" />
+<link href="../../../resources/css/core.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/core.css}" />
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="../../../resources/js/bootstrap.min.js"
+	th:src="@{/resources/js/bootstrap.min.js}"></script>
+<script>
+	function btn_cancel() {
+		window.location = "/tumblr02/";
+	}
+</script>
+</head>
+<body>
+	<div th:replace="fragments/header :: header">&nbsp;</div>
+	<div class="row">
+
+		<div class="col-xs-12 col-sm-6 col-md-8">
+			<form class="form-narrow form-horizontal" method="post"
+				th:action="@{/account/configuration}"
+				th:object="${accountConfigurationForm}"
+				enctype="multipart/form-data">
+				<!--/* Show general error message when form contains errors */-->
+				<th:block
+					th:if="${#fields.hasErrors('${accountConfigurationForm.*}')}">
+					<div
+						th:replace="fragments/alert :: alert (type='danger', message='Form contains errors. Please try again.')">Alert</div>
+				</th:block>
+				<fieldset>
+					<legend>Account</legend>
+					<div class="form-group">
+						<div class="row">
+							<div class="col-md-3">
+								<img th:if="${account.image}"
+									th:src="@{/images/{id}-account.jpg(id=${account.id})}"
+									class="img-circle" width="90" height="90"> <img
+									th:unless="${account.image}" th:src="@{/images/default.jpg}"
+									class="img-circle" width="90" height="90">
+							</div>
+							<div class="col-md-8">
+								<label for="file">Select a new profile image (only .jpg)</label>
+								<input type="file" name="file" id="file" />
+							</div>
+						</div>
+					</div>
+					<div class="form-group"
+						th:classappend="${#fields.hasErrors('userName')}? 'has-error'">
+						<label for="name" class="col-lg-2 control-label">User name</label>
+						<div class="col-lg-10">
+							<input type="text" class="form-control" id="userName"
+								th:placeholder="${account.userName}" th:field="*{userName}" />
+							<span class="help-block" th:if="${#fields.hasErrors('userName')}"
+								th:errors="*{userName}">Incorrect user name</span>
+						</div>
+					</div>
+					<div class="form-group"
+						th:classappend="${#fields.hasErrors('password')}? 'has-error'">
+						<label for="password" class="col-lg-2 control-label">New
+							Password</label>
+						<div class="col-lg-10">
+							<input type="password" class="form-control" id="password"
+								th:field="*{password}" /> <span class="help-block"
+								th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Incorrect
+								password</span>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-lg-offset-2 col-lg-10">
+							<button type="submit" class="btn btn-primary">
+								<span class="glyphicon glyphicon-floppy-disk"></span> Save
+								changes
+							</button>
+							<button type="button" onclick="btn_cancel()"
+								class="btn btn-default">Cancel</button>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+		<br>
+		<div class="col-xs-6 col-md-3">
+			<div class="list-group">
+				<a class="list-group-item active">Account</a> <br>
+				<legend>Blogs</legend>
+
+				<tr th:each="blog : ${account.blogs}">
+					<a class="list-group-item"
+						th:href="@{/account/configuration/blogconfiguration/{id}(id=${blog.blogId})}"
+						th:text="${blog.name}"> Name</a>
+				</tr>
+				<br>
+				<a href="/createBlog" th:href="@{/createBlog}"
+					onclick="$('#form').submit();"> <span
+					class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Create
+					a new blog
+				</a>
+		
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

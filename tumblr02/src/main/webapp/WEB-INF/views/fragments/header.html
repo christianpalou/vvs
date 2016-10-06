@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link href="../../../resources/css/bootstrap.min.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/bootstrap.min.css}" />
+</head>
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top"
+		th:fragment="header">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#navbar-collapse" aria-expanded="false">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#" th:href="@{/}">Tumblr</a>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<form class="navbar-form navbar-left" role="search" method="get"
+					th:action="@{/finds}">
+					<div class="form-group">
+
+						<input th:if="${search}" type="text" class="form-control"
+							name="keywords" th:placeholder="${search}"> <input
+							th:unless="${search}" type="text" class="form-control"
+							name="keywords" placeholder="Search">
+
+					</div>
+					<button type="submit" class="btn btn-default">Search</button>
+				</form>
+				<ul class="nav navbar-nav navbar-right">
+					<li th:if="${#authorization.expression('!isAuthenticated()')}">
+						<a href="/signin" th:href="@{/signin}"> <span
+							class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Sign
+							in
+					</a>
+					</li>
+					<li th:if="${#authorization.expression('isAuthenticated()')}"
+						class="dropdown"><a th:if="${account.image}" href="#"
+						class="dropdown-toggle" data-toggle="dropdown"> <span
+							th:text="${account.userName}"></span> <img
+							th:src="@{/images/{id}-account.jpg(id=${account.id})}"
+							class="img-circle" width="30" height="30"> <span
+							class="caret"></span></a> <a th:unless="${account.image}" href="#"
+						class="dropdown-toggle" data-toggle="dropdown"> <span
+							th:text="${account.userName}"></span> <img
+							th:src="@{/images/default.jpg}" class="img-circle" width="30"
+							height="30"> <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+
+							<li><a href="/account/notifications"
+								th:href="@{/account/notifications}"
+								onclick="$('#form').submit();"> <span
+									class="glyphicon glyphicon-inbox" aria-hidden="true"></span>&nbsp;Notifications
+									<span class="badge">4 </span>
+							</a></li>
+							<li><a href="/account/followingBlogs"
+								th:href="@{'/account/'+${account.id}+'/followingBlogs'}"
+								onclick="$('#form').submit();"> <span
+									class="glyphicon glyphicon-th-list" aria-hidden="true"></span>&nbsp;Following
+									Blogs
+							</a></li>
+							<li class="divider"></li>
+							<li><a href="/createBlog" th:href="@{/createBlog}"
+								onclick="$('#form').submit();"> <span
+									class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Create
+									a new blog
+							</a></li>
+							<li><a href="/createBlog"
+								th:href="@{/account/configuration}"
+								onclick="$('#form').submit();"> <span
+									class="glyphicon glyphicon-cog" aria-hidden="true"></span>&nbsp;Configuration
+							</a></li>
+
+
+							<li class="divider"></li>
+							<li><a href="/logout" th:href="@{#}"
+								onclick="$('#form').submit();"> <span
+									class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Log
+									out
+							</a>
+								<form style="visibility: hidden" id="form" method="post"
+									action="#" th:action="@{/logout}"></form></li>
+
+						</ul></li>
+				</ul>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</nav>
+</body>
+</html>

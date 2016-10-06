@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Blog</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="../../../resources/css/bootstrap.min.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/bootstrap.min.css}" />
+<link href="../../../resources/css/core.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/core.css}" />
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="../../../resources/js/bootstrap.min.js"
+	th:src="@{/resources/js/bootstrap.min.js}"></script>
+</head>
+<body>
+	<div th:replace="fragments/header :: header">&nbsp;</div>
+
+	<div class="text-center" id="blog" th:object="${blog}">
+		<br>
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<div class="panel panel-default">
+
+					<img th:if="${blog.image}"
+						th:src="@{/images/{iaccountd}-{idblog}-blog.jpg(id=${blog.blogId})(idaccount=${blog.account.id})}"
+						class="img-rounded" width="90" height="90"> <img
+						th:unless="${account.image}" th:src="@{/images/default.jpg}"
+						class="img-rounded" width="90" height="90">
+
+
+					<h1>
+						<spam th:text="*{title}"></spam>
+					</h1>
+					<p>
+						<spam th:text="*{description}"></spam>
+					</p>
+
+					<form th:if="${followButton}" method="post"
+						th:action="@{'/blog/' + ${blog.blogId}}">
+						<button type="submit" class="btn btn-default" name="follow"
+							value="follow">Follow</button>
+					</form>
+
+					<form th:if="${unfollowButton}" method="post"
+						th:action="@{'/blog/' + ${blog.blogId}}">
+						<button type="submit" class="btn btn-default" name="unfollow"
+							value="unfollow">Unfollow</button>
+					</form>
+
+					<a href="#" th:href="@{/blog/{id}/followers(id=${blog.blogId})}">Followers</a>
+
+					<div th:if="${isOwner}">
+						<a href="#"
+							th:href="@{/blog/{id}/followRequests(id=${blog.blogId})}">Follow
+							Request <span class="badge"
+							th:text="${#lists.size(blog.followRequests)}">3</span>
+						</a>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+</body>
+</html>
