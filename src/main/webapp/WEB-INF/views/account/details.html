@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Account details</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="../../../resources/css/bootstrap.min.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/bootstrap.min.css}" />
+<link href="../../../resources/css/core.css" rel="stylesheet"
+	media="screen" th:href="@{/resources/css/core.css}" />
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="../../../resources/js/bootstrap.min.js"
+	th:src="@{/resources/js/bootstrap.min.js}"></script>
+</head>
+<body>
+	<div th:replace="fragments/header :: header">&nbsp;</div>
+	<div class="text-center" id="account" th:object="${otheraccount}">
+		<h1>Account</h1>
+		<p>
+			<spam th:text="*{userName}"></spam>
+		</p>
+
+		<img th:if="${account.image}"
+			th:src="@{/images/{id}-account.jpg(id=${account.id})}"
+			class="img-circle" width="90" height="90"> <img
+			th:unless="${account.image}" th:src="@{/images/default.jpg}"
+			class="img-circle" width="90" height="90">
+	</div>
+	<div class="row">
+		<div class="col-xs-6">
+			<h3>Blogs</h3>
+			<div class="list-group">
+				<tr th:each="blog : ${otheraccount.blogs}">
+					<a href="details.html" th:href="@{/blog/{id}(id=${blog.blogId})}"
+						class="list-group-item active" th:text="${blog.name}"> Name</a>
+					<a href="#" th:href="@{/blog/{id}/followers(id=${blog.blogId})}"
+						class="list-group-item">Followers <span class="badge"
+						th:text="${#lists.size(blog.followers)}">3</span></a>
+				</tr>
+			</div>
+		</div>
+		<div class="col-xs-6">
+			<h3>Following Blogs</h3>
+			<div class="list-group">
+				<tr th:each="blog : ${otheraccount.followingBlogs}">
+					<a href="details.html" th:href="@{/blog/{id}(id=${blog.blogId})}"
+						class="list-group-item active" th:text="${blog.name}"> Name</a>
+					<a href="#" th:href="@{/blog/{id}/followers(id=${blog.blogId})}"
+						class="list-group-item">Followers <span class="badge"
+						th:text="${#lists.size(blog.followers)}">3</span></a>
+				</tr>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
