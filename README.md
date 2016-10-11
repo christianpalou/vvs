@@ -7,6 +7,4 @@ Adrián Otero Calviño (a.oteroc)
 
 Descripción da funcionalidade do producto software
 --------------------------------------------------
-
-
-
+Red social similar a tumblr en la que cada usuario puede tener un número ilimitado de blogs. En el programa se trata la gestión de blogs, la actualización de informacion personal, gestion de imagenes de perfil, gestion de biografía, privacidad de blogs, peticiones de seguimiento.
