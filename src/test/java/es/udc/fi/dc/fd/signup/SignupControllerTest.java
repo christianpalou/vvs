@@ -12,6 +12,8 @@ import org.junit.Test;
 import es.udc.fi.dc.fd.config.WebAppConfigurationAware;
 
 public class SignupControllerTest extends WebAppConfigurationAware {
+	
+	//PR-UN-037
 	@Test
 	public void displaysSignupForm() throws Exception {
 		mockMvc.perform(get("/signup"))
