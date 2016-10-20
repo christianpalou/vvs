@@ -53,8 +53,11 @@ public class AccountServiceTest {
 	//PR-UN-028
 	@Test
 	public void testSaveAccount() throws SaveNotAvailableException{
-		Account foundAccount = accountRepository.findOneByEmail("user@example.com");
-		assertEquals(account, foundAccount);
+		Account account2 = accountService.save(account);
+		//assertNotNull(account2);
+		assertEquals(account2.getClass(),Account.class);
+		assertEquals(account.getEmail(), account2.getEmail());
+		assertEquals(account.getUserName(), account2.getUserName());
 	}
 
 	//PR-UN-029
