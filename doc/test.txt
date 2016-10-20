@@ -1,0 +1,90 @@
+ DEFINICIÓN DE LOS CASOS DE PRUEBA
+----------------------------------
+
+PR-UN-001
+	Unidad: BlogService
+	Método: SaveBlog
+	Motivación:
+	Valores de entrada:
+		- Nombre del blog:
+		- Titulo del blog:
+		- Descripción del blog:
+		- Cuenta de usuario:
+		- Privacidad:
+		- Seguidores:
+		- Peticiones de seguimiento:
+		- Imagen
+	Valores de salida: Objeto Blog
+	Inicialización necesaria: Objeto account
+PR-UN-002
+	Unidad: 
+	Método:
+	Motivación:
+	Valores de entrada:
+	Valores de salida:
+	Inicialización necesaria:
+PR-UN-003
+	Unidad: 
+	Método:
+	Motivación:
+	Valores de entrada:
+	Valores de salida:
+	Inicialización necesaria:
+PR-UN-004
+	Unidad: 
+	Método:
+	Motivación:
+	Valores de entrada:
+	Valores de salida:
+	Inicialización necesaria:
+PR-UN-005
+	Unidad: 
+	Método:
+	Motivación:
+	Valores de entrada:
+	Valores de salida:
+	Inicialización necesaria:
+PR-UN-006
+	Unidad: 
+	Método:
+	Motivación:
+	Valores de entrada:
+	Valores de salida:
+	Inicialización necesaria:
+PR-UN-007
+	Unidad: 
+	Método:
+	Motivación:
+	Valores de entrada:
+	Valores de salida:
+	Inicialización necesaria:
+PR-UN-008
+	Unidad: 
+	Método:
+	Motivación:
+	Valores de entrada:
+	Valores de salida:
+	Inicialización necesaria:
+PR-UN-009
+	Unidad: 
+	Método:
+	Motivación:
+	Valores de entrada:
+	Valores de salida:
+	Inicialización necesaria:
+PR-UN-010
+	Unidad: 
+	Método:
+	Motivación:
+	Valores de entrada:
+	Valores de salida:
+	Inicialización necesaria:
+PR-UN-011
+	Unidad: 
+	Método:
+	Motivación:
+	Valores de entrada:
+	Valores de salida:
+	Inicialización necesaria:
+PR-UN-012
+
