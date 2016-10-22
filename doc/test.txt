@@ -143,25 +143,501 @@ PR-UN-008
 				- Role:ROLE_USER
 				- userName: adri
 PR-UN-009
-	Unidad: 
-	Método:
-	Motivación:
+	Unidad: BlogService
+	Método: Follow
+	Motivación: Probar a seguir un blog desde una cuenta que no existe
 	Valores de entrada:
-	Valores de salida:
+	Valores de salida: InstanceNotFoundException
 	Inicialización necesaria:
+		- Objeto Blog
+				- Nombre del blog: MyBlog
+				- Titulo del blog: AdriBlog
+				- Descripción del blog: This is the blog of Adri.
+				- Cuenta de usuario:account
+				- Privacidad:false
 PR-UN-010
-	Unidad: 
-	Método:
-	Motivación:
+	Unidad: BlogService
+	Método: UnFollow
+	Motivación: Probar método en caso base
 	Valores de entrada:
-	Valores de salida:
+	Valores de salida: Blog seguido por account2
 	Inicialización necesaria:
+		- Objeto Blog
+				- Nombre del blog: MyBlog
+				- Titulo del blog: AdriBlog
+				- Descripción del blog: This is the blog of Adri.
+				- Cuenta de usuario:account
+				- Privacidad:false
+		- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
+		- Objeto Account2
+				- Email: brais@udc.es
+				- Password: brais
+				- Role:ROLE_USER
+				- userName: brais
+		- Objeto Account23
+				- Email: christian@udc.es
+				- Password: christian
+				- Role:ROLE_USER
+				- userName: christian
+
 PR-UN-011
-	Unidad: 
-	Método:
+	Unidad: Blog Service
+	Método: Unfollow
+	Motivación: No se puede dejar de seguir un blog que no se seguía anteriormente
+	Valores de entrada:
+	Valores de salida: FollowException
+	Inicialización necesaria:
+			- Objeto Account2
+				- Email: brais@udc.es
+				- Password: brais
+				- Role:ROLE_USER
+				- userName: brais
+			- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
+			- Objeto Blog
+				- Nombre del blog: MyBlog
+				- Titulo del blog: AdriBlog
+				- Descripción del blog: This is the blog of Adri.
+				- Cuenta de usuario:account
+				- Privacidad:false
+PR-UN-012
+	Unidad: Blog Service
+	Método: UnFollow
+	Motivación: Comprobar que no se puede dejar de seguir un blog que no existe
+	Valores de entrada:
+	Valores de salida: FollowException 
+	Inicialización necesaria:
+			- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
+
+PR-UN-013
+	Unidad: Blog Service
+	Método: UnFollow
+	Motivación: Comprobar que una cuenta que no existe no puede dejar de seguir a un blog
+	Valores de entrada:
+	Valores de salida: FollowException 
+	Inicialización necesaria:
+			- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
+			- Objeto Blog
+				- Nombre del blog: MyBlog
+				- Titulo del blog: AdriBlog
+				- Descripción del blog: This is the blog of Adri.
+PR-UN-014
+	Unidad: Blog Service
+	Método: AcceptFollowRequest
+	Motivación: Probar caso base
+	Valores de entrada:
+	Valores de salida: El blog2 es seguido por account2
+	Inicialización necesaria:
+			- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
+			- Objeto Account2
+				- Email: brais@udc.es
+				- Password: brais
+				- Role:ROLE_USER
+				- userName: brais
+			- Objeto Blog2
+				- Nombre del blog: YourBlog
+				- Titulo del blog: AdriBlog
+				- Descripción del blog: This is the blog of Adri.
+				- Cuenta de usuario:account
+				- Privacidad:true
+
+PR-UN-015
+	Unidad: Blog Service
+	Método:  AcceptFollowRequest
+	Motivación: Comprobar que no se puede aceptar la petición de una cuenta seguidora
+	Valores de entrada:
+	Valores de salida: FollowException 
+	Inicialización necesaria:
+			- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
+			- Objeto Account2
+				- Email: brais@udc.es
+				- Password: brais
+				- Role:ROLE_USER
+				- userName: brais
+			- Objeto Blog2
+				- Nombre del blog: YourBlog
+				- Titulo del blog: AdriBlog
+				- Descripción del blog: This is the blog of Adri.
+				- Cuenta de usuario:account
+				- Privacidad:true
+
+PR-UN-016
+	Unidad: Blog Service
+	Método:  AcceptFollowRequest
+	Motivación: Comprobar que no se puede aceptar la petición de una cuenta propietaria
+	Valores de entrada:
+	Valores de salida: FollowException 
+	Inicialización necesaria:
+	- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
+			- Objeto Blog2
+				- Nombre del blog: YourBlog
+				- Titulo del blog: AdriBlog
+				- Descripción del blog: This is the blog of Adri.
+				- Cuenta de usuario:account
+				- Privacidad:true
+
+PR-UN-017
+	Unidad: Blog Service
+	Método:  AcceptFollowRequest
+	Motivación: Comprobar que no se puede aceptar la petición de una cuenta que no tenga una petición pendiente.
+	Valores de entrada:
+	Valores de salida: FollowException 
+	Inicialización necesaria:
+			- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
+			- Objeto Account2
+				- Email: brais@udc.es
+				- Password: brais
+				- Role:ROLE_USER
+				- userName: brais
+			- Objeto Blog2
+				- Nombre del blog: YourBlog
+				- Titulo del blog: AdriBlog
+				- Descripción del blog: This is the blog of Adri.
+				- Cuenta de usuario:account
+				- Privacidad:true
+
+PR-UN-018
+	Unidad: Blog Service
+	Método: AcceptFollowRequest
+	Motivación: Aceptar peticiond e seguimiento de un blog que no existe
+	Valores de entrada:
+	Valores de salida: FollowException 
+	Inicialización necesaria:
+			- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
+PR-UN-019
+	Unidad: Blog Service
+	Método: Comprobar que no se puede aceptar la petición de seguimiento de una cuenta que no existe
+	Motivación:
+	Valores de entrada:
+	Valores de salida: FollowException 
+	Inicialización necesaria:
+			- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
+			- Objeto Blog2
+				- Nombre del blog: YourBlog
+				- Titulo del blog: AdriBlog
+				- Descripción del blog: This is the blog of Adri.
+				- Cuenta de usuario:account
+				- Privacidad:true
+PR-UN-020
+	Unidad: Blog Service
+	Método: DenyFollowRequest
+	Motivación: Comprobar el caso base del método
+	Valores de entrada:
+	Valores de salida: 
+	Inicialización necesaria:
+			- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
+			- Objeto Account2
+				- Email: brais@udc.es
+				- Password: brais
+				- Role:ROLE_USER
+				- userName: brais
+			- Objeto Blog2
+				- Nombre del blog: YourBlog
+				- Titulo del blog: AdriBlog
+				- Descripción del blog: This is the blog of Adri.
+				- Cuenta de usuario:account
+				- Privacidad:true
+
+PR-UN-021
+	Unidad: Blog Service
+	Método: DenyFollowRequest
+	Motivación: Comproba que no se puede denegar una petición de una cuenta seguidora
+	Valores de entrada:
+	Valores de salida:
+	Inicialización necesaria:
+			- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
+			- Objeto Account2
+				- Email: brais@udc.es
+				- Password: brais
+				- Role:ROLE_USER
+				- userName: brais
+			- Objeto Blog2
+				- Nombre del blog: YourBlog
+				- Titulo del blog: AdriBlog
+				- Descripción del blog: This is the blog of Adri.
+				- Cuenta de usuario:account
+				- Privacidad:true
+
+PR-UN-022
+	Unidad: Blog Service
+	Método: DenyFollowRequest
+	Motivación: Comprobar que no se puede denegar la petición de una cuenta propietaria
+	Valores de entrada:
+	Valores de salida: FollowException 
+	Inicialización necesaria:
+	- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
+			- Objeto Blog2
+				- Nombre del blog: YourBlog
+				- Titulo del blog: AdriBlog
+				- Descripción del blog: This is the blog of Adri.
+				- Cuenta de usuario:account
+				- Privacidad:true
+PR-UN-023
+	Unidad: Blog Service
+	Método: DenyFollowRequest
+	Motivación: Comprobar que no se puede denegar la petición de una cuenta que no tiene una petición pendiente
+	Valores de entrada:
+	Valores de salida: FollowException 
+	Inicialización necesaria:
+			- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
+			- Objeto Account2
+				- Email: brais@udc.es
+				- Password: brais
+				- Role:ROLE_USER
+				- userName: brais
+			- Objeto Blog2
+				- Nombre del blog: YourBlog
+				- Titulo del blog: AdriBlog
+				- Descripción del blog: This is the blog of Adri.
+				- Cuenta de usuario:account
+				- Privacidad:true
+
+PR-UN-024
+	Unidad: Blog Service
+	Método: DenyFollowRequest
+	Motivación: Comprobar que no se puede denegar una petición de un blog que no existe
+	Valores de entrada:
+	Valores de salida: FollowException 
+	Inicialización necesaria:
+			- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
+PR-UN-025
+	Unidad: Blog Service
+	Método: DenyFollowRequest
+	Motivación: Comprobar que no se puede denegar una petición de una cuenta que no existe.
+	Valores de entrada:
+	Valores de salida: FollowException 
+	Inicialización necesaria:
+			- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
+			- Objeto Blog2
+				- Nombre del blog: YourBlog
+				- Titulo del blog: AdriBlog
+				- Descripción del blog: This is the blog of Adri.
+				- Cuenta de usuario:account
+				- Privacidad:true
+PR-UN-026
+	Unidad: Blog Service
+	Método: findBlogByName
+	Motivación: Comprobar el caso base
+	Valores de entrada: "MyBlog"
+	Valores de salida: El blog con ese nombre
+	Inicialización necesaria:
+			- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
+			- Objeto Blog
+				- Nombre del blog: MyBlog
+				- Titulo del blog: AdriBlog
+				- Descripción del blog: This is the blog of Adri.
+
+PR-UN-027
+	Unidad: Blog Service
+	Método: findBlogByName
+	Motivación: Ampliar la comprobación del caso base
+	Valores de entrada: "zzz", "My", "Blog"
+	Valores de salida: Los blog que contienen la cadena de entrada en su nombre
+	Inicialización necesaria:
+			- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
+			- Objeto Blog
+				- Nombre del blog: MyBlog
+				- Titulo del blog: AdriBlog
+				- Descripción del blog: This is the blog of Adri.
+			- Objeto Blog2
+				- Nombre del blog: YourBlog
+				- Titulo del blog: AdriBlog
+				- Descripción del blog: This is the blog of Adri.
+				- Cuenta de usuario:account
+				- Privacidad:true
+PR-UN-028
+	Unidad: Blog Service
+	Método:  IsFollower
+	Motivación: Comprobar caso base
+	Valores de entrada:
+	Valores de salida:
+	Inicialización necesaria:
+			- Objeto Blog
+				- Nombre del blog: MyBlog
+				- Titulo del blog: AdriBlog
+				- Descripción del blog: This is the blog of Adri.
+				- Cuenta de usuario:account
+				- Privacidad:false
+			- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
+			- Objeto Account2
+				- Email: brais@udc.es
+				- Password: brais
+				- Role:ROLE_USER
+				- userName: brais
+
+PR-UN-029
+	Unidad: Blog Service
+	Método:  IsFollower
+	Motivación: Comprobar que no se puede hacer IsFollower de un blog que no existe
+	Valores de entrada:
+	Valores de salida: InstanceNotFoundException 
+	Inicialización necesaria:
+			- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
+PR-UN-030
+	Unidad: Blog Service
+	Método: IsFollower
+	Motivación: Comprobrar que no se puede hacer IsFollower de una cuenta que no existe
+	Valores de entrada:
+	Valores de salida:
+	Inicialización necesaria:
+			- Objeto Blog
+				- Nombre del blog: MyBlog
+				- Titulo del blog: AdriBlog
+				- Descripción del blog: This is the blog of Adri.
+				- Cuenta de usuario:account
+				- Privacidad:false
+			- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
+PR-UN-031
+	Unidad: Blog Service
+	Método: isFollowRequest
+	Motivación: Comprobar el caso base
+	Valores de entrada:
+	Valores de salida:
+	Inicialización necesaria:
+			- Objeto Blog
+				- Nombre del blog: MyBlog
+				- Titulo del blog: AdriBlog
+				- Descripción del blog: This is the blog of Adri.
+				- Cuenta de usuario:account
+				- Privacidad:false
+			- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
+			- Objeto Account2
+				- Email: brais@udc.es
+				- Password: brais
+				- Role:ROLE_USER
+				- userName: brais
+PR-UN-032
+	Unidad: Blog Service
+	Método: isFollowRequest
+	Motivación: Comprobar que no se puede hacer IsFollowRequest de un blog que no existe
+	Valores de entrada:
+	Valores de salida:
+	Inicialización necesaria:
+			- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
+
+PR-UN-033
+	Unidad: Blog Service
+	Método: isFollowRequest
+	Motivación: Comprobrar que no se puede hacer isFollowRequest de una cuenta que no existe
+	Valores de entrada:
+	Valores de salida:
+	Inicialización necesaria:
+			- Objeto Blog
+				- Nombre del blog: MyBlog
+				- Titulo del blog: AdriBlog
+				- Descripción del blog: This is the blog of Adri.
+				- Cuenta de usuario:account
+				- Privacidad:false
+			- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
+
+
+
+
+PR-UN-034
+	Unidad: Blog Service
+	Método: 
 	Motivación:
 	Valores de entrada:
 	Valores de salida:
 	Inicialización necesaria:
-PR-UN-012
+
+
+
+
+
 
