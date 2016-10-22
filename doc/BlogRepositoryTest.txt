@@ -1,0 +1,72 @@
+CASOS DE PRUEBA
+---------------
+
+INICIALIZACIÓN
+	La inicialización de los datos necesarios en los casos de prueba se realiza en el método initialice
+DESTRUCCIÓN
+	A la hora de implementar los casos de prueba hemos empleado el  framework junit que tras anotar la clase con @Transactional nos gestiona la destrucción de las entidades persistentes de la siguiente manera.
+		- Tras finalizar cada caso de prueba, anotado con @Test la base de datos y la memoria queda en el mismo estado que tenía antes de ejecutarse ese caso de prueba.
+
+		- Tras finalizar la clase anotada con @Transactional, se borran todos los datos creados  en el método initialice de forma automática.
+
+PR-UN-001
+	Unidad: Blog Repository
+	Método: Save
+	Motivación: Comprobar caso base
+	Valores de entrada:
+	Valores de salida:
+	Inicialización necesaria:
+		- Objeto Blog3
+				- Nombre del blog: Life
+				- Titulo del blog: Life love you
+				- Descripción del blog: This is the blog of my life.
+				- Cuenta de usuario:account
+				- Privacidad:false
+		- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
+PR-UN-002
+	Unidad: Blog Repository
+	Método: FindOneByNameContaining
+	Motivación: Comprobar caso base
+	Valores de entrada:
+	Valores de salida:
+	Inicialización necesaria:
+		- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
+		- Objeto Blog
+				- Nombre del blog: MyBlog
+				- Titulo del blog: AdriBlog
+				- Descripción del blog: This is the blog of Adri.
+				- Cuenta de usuario:account
+				- Privacidad:false
+		- Objeto Blog2
+				- Nombre del blog: YourBlog
+				- Titulo del blog: AdriBlog
+				- Descripción del blog: This is the blog of Adri.
+				- Cuenta de usuario:account
+				- Privacidad:true
+PR-UN-003
+	Unidad: Blog Repository
+	Método: FindOneByName
+	Motivación: Comprobar caso base
+	Valores de entrada:
+	Valores de salida:
+	Inicialización necesaria:
+		- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
+		- Objeto Blog
+				- Nombre del blog: MyBlog
+				- Titulo del blog: AdriBlog
+				- Descripción del blog: This is the blog of Adri.
+				- Cuenta de usuario:account
+				- Privacidad:false
+

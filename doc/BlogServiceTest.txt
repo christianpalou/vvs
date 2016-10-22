@@ -1,5 +1,5 @@
 CASOS DE PRUEBA
-----------------------------------
+----------------
 
 INICIALIZACIÓN
 	La inicialización de los datos necesarios en los casos de prueba se realiza en el método initialice
