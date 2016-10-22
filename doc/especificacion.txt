@@ -1,2 +1,14 @@
 ESPECIFICACIÓN DE TUMBLR02
 --------------------------
+Tumblr02 es una plataforma de microblogging que permite a sus usuarios publicar textos, imágenes, enlaces y citas.
+
+La aplicación de desarrollará en 3 iteracciónes. Este producto corresponde con la primera entrega y los requisitos funcionales son los siguientes:
+
+- Gestión de usuarios.
+- Selección de url de usuario independiente del login.
+- Foto de perfil.
+- Biografía de perfil.
+- Actualización de la información personal.
+- Política de privacidad.
+- Seguir y dejar de seguir blogs.
+- Aceptar peticiones de seguimento.
