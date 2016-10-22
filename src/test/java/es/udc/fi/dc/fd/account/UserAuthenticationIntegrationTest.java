@@ -29,14 +29,13 @@ public class UserAuthenticationIntegrationTest extends WebSecurityConfigurationA
 		pass2 = "invalid";
 	}
 	
-	//PR-UN-034
+
 	@Test
 	public void requiresAuthentication() throws Exception {
 		mockMvc.perform(get("/account/current"))
 		.andExpect(redirectedUrl("http://localhost/signin"));
 	}
 
-	//PR-UN-035
 	@Test
 	public void userAuthenticates() throws Exception {
 
@@ -46,7 +45,7 @@ public class UserAuthenticationIntegrationTest extends WebSecurityConfigurationA
 
 	}
 
-	//PR-UN-036
+
 	@Test
 	public void userAuthenticationFails() throws Exception {
 		mockMvc.perform(post("/authenticate").param("username", username).param("password", pass2))

@@ -1,70 +1,147 @@
  DEFINICIÓN DE LOS CASOS DE PRUEBA
 ----------------------------------
+Explicar que se borran todos los datos tras la ejecución de una clase de pruebas.
 
 PR-UN-001
 	Unidad: BlogService
 	Método: SaveBlog
-	Motivación:
+	Motivación: Comprobar que crea un objeto distinto de null y perteneciente a la clsae Blog.
 	Valores de entrada:
-		- Nombre del blog:
-		- Titulo del blog:
-		- Descripción del blog:
-		- Cuenta de usuario:
-		- Privacidad:
-		- Seguidores:
-		- Peticiones de seguimiento:
-		- Imagen
+		- Nombre del blog: MyBlog2
+		- Titulo del blog: AdriBlog
+		- Descripción del blog: This is the blog of Adri.
+		- Cuenta de usuario:account
+		- Privacidad:false
 	Valores de salida: Objeto Blog
 	Inicialización necesaria: Objeto account
 PR-UN-002
-	Unidad: 
-	Método:
-	Motivación:
-	Valores de entrada:
-	Valores de salida:
+	Unidad:  BlogService
+	Método:SaveBlog
+	Motivación: Comprobar que no se puedan crear dos blogs con el mismo nombre.
+	Valores de entrada: Dos objetos Blog con el mismo nombre. En este caso "MyBlog"
+	Valores de salida: Excepción SaveNotAvailableException
 	Inicialización necesaria:
+			- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
 PR-UN-003
-	Unidad: 
-	Método:
+	Unidad: BlogService
+	Método: UpdateBlog
 	Motivación:
 	Valores de entrada:
-	Valores de salida:
+		- Nombre: "YourBlog"
+		- Título: "BraisBlog"
+	Valores de salida: El blog actualizado
 	Inicialización necesaria:
+		- Objeto Blog
+				- Nombre del blog: MyBlog
+				- Titulo del blog: AdriBlog
+				- Descripción del blog: This is the blog of Adri.
+				- Cuenta de usuario:account
+				- Privacidad:false
+		- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
+
 PR-UN-004
-	Unidad: 
-	Método:
-	Motivación:
+	Unidad: BlogService
+	Método: Follow
+	Motivación: Probar el caso base
 	Valores de entrada:
-	Valores de salida:
+	Valores de salida: Un blog que es seguido por tres cuentas.
 	Inicialización necesaria:
+	- Objeto Blog
+				- Nombre del blog: MyBlog
+				- Titulo del blog: AdriBlog
+				- Descripción del blog: This is the blog of Adri.
+				- Cuenta de usuario:account
+				- Privacidad:false
+		- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
+
 PR-UN-005
-	Unidad: 
-	Método:
-	Motivación:
+	Unidad: BlogService
+	Método:Follow
+	Motivación: Probar que no se puede seguir a un blog propio
 	Valores de entrada:
-	Valores de salida:
+	Valores de salida: FollowException
 	Inicialización necesaria:
+	- Objeto Blog
+				- Nombre del blog: MyBlog
+				- Titulo del blog: AdriBlog
+				- Descripción del blog: This is the blog of Adri.
+				- Cuenta de usuario:account
+				- Privacidad:false
+		- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
 PR-UN-006
-	Unidad: 
-	Método:
-	Motivación:
+	Unidad: BlogService
+	Método:Follow
+	Motivación: Probar que no se puede volver a seguir a un blog
 	Valores de entrada:
-	Valores de salida:
+	Valores de salida: FollowException
 	Inicialización necesaria:
+	- Objeto Blog
+				- Nombre del blog: MyBlog
+				- Titulo del blog: AdriBlog
+				- Descripción del blog: This is the blog of Adri.
+				- Cuenta de usuario:account
+				- Privacidad:false
+	- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
+	- Objeto Account2
+				- Email: brais@udc.es
+				- Password: brais
+				- Role:ROLE_USER
+				- userName: brais
 PR-UN-007
-	Unidad: 
-	Método:
-	Motivación:
+	Unidad: BlogService
+	Método:Follow
+	Motivación: Probar que no se puede volver a seguir a un blog con peticiones pendientes
 	Valores de entrada:
-	Valores de salida:
+	Valores de salida: FollowException
 	Inicialización necesaria:
+	- Objeto Blog2
+				- Nombre del blog: YourBlog
+				- Titulo del blog: AdriBlog
+				- Descripción del blog: This is the blog of Adri.
+				- Cuenta de usuario:account
+				- Privacidad:true
+		- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
+		- Objeto Account2
+				- Email: brais@udc.es
+				- Password: brais
+				- Role:ROLE_USER
+				- userName: brais
 PR-UN-008
-	Unidad: 
-	Método:
-	Motivación:
+	Unidad: BlogService
+	Método: Follow
+	Motivación: Probar a seguir un blog que no existe
 	Valores de entrada:
-	Valores de salida:
+	Valores de salida: InstanceNotFoundException
 	Inicialización necesaria:
+			- Objeto Account
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
 PR-UN-009
 	Unidad: 
 	Método:
