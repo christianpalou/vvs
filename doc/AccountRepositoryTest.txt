@@ -1,0 +1,25 @@
+CASOS DE PRUEBA
+----------------
+
+INICIALIZACIÓN
+	La inicialización de los datos necesarios en los casos de prueba se realiza en el método initialice
+DESTRUCCIÓN
+	A la hora de implementar los casos de prueba hemos empleado el  framework junit que tras anotar la clase con @Transactional nos gestiona la destrucción de las entidades persistentes de la siguiente manera.
+		- Tras finalizar cada caso de prueba, anotado con @Test la base de datos y la memoria queda en el mismo estado que tenía antes de ejecutarse ese caso de prueba.
+
+		- Tras finalizar la clase anotada con @Transactional, se borran todos los datos creados  en el método initialice de forma automática.
+
+PR-UN-001
+	Unidad:
+	Método: 
+	Motivación: 
+	Valores de entrada:
+	Valores de salida:
+	Inicialización necesaria:
+
+
+
+
+
+
+
