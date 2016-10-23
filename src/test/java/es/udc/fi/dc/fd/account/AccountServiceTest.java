@@ -3,10 +3,7 @@ package es.udc.fi.dc.fd.account;
 import static java.util.function.Predicate.isEqual;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
-
 import java.util.List;
-
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -40,69 +37,70 @@ public class AccountServiceTest {
 	Account account;
 	Account account2;
 	Account account3;
+	Account account4;
+	Account account5;
 	
 	@Before
 	public void intialize() throws SaveNotAvailableException{
 		account = new Account("user@example.com", "demo", "ROLE_USER", "demo");
 		account2 = new Account("adri@udc.es", "adri", "ROLE_USER", "adri");
-		account3 = new Account("adri@udc.es", "adri", "ROLE_USER", "adri");
-		accountService.save(account);
-		accountService.save(account2);
+		account3 = new Account("adri@udc.es", "otero", "ROLE_USER", "otero");
+		account4 = new Account("otero@udc.es", "adri", "ROLE_USER", "adri");
+		account5 = new Account("christian@udc.es", "christian", "ROLE_USER", "christian");
+		accountService.save(account5);
 	}
 	
-	//PR-UN-028
+	//PR-UN-001
 	@Test
 	public void testSaveAccount() throws SaveNotAvailableException{
-		Account account2 = accountService.save(account);
-		//assertNotNull(account2);
-		assertEquals(account2.getClass(),Account.class);
-		assertEquals(account.getEmail(), account2.getEmail());
-		assertEquals(account.getUserName(), account2.getUserName());
+		Account expectedAccount = accountService.save(account);
+		assertEquals(expectedAccount.getClass(),Account.class);
+		assertEquals(account, expectedAccount);
 	}
 
-	//PR-UN-029
+	//PR-UN-002
 	@Test(expected = SaveNotAvailableException.class)
 	public void testSaveBlogWithExistingEmail() throws SaveNotAvailableException{
+		accountService.save(account2);
 		accountService.save(account3);
 	}
 
-	//PR-UN-030
+	//PR-UN-003
 	@Test(expected = SaveNotAvailableException.class)
 	public void testSaveBlogWithExistingUserName() throws SaveNotAvailableException{
-		accountService.save(account3);
+		accountService.save(account2);
+		accountService.save(account4);
 	}
 
-	//PR-UN-031
+	//PR-UN-004
 	@Test
-	public void shouldInitializeWithTwoDemoUsers() {
+	public void testShouldInitializeWithTwoDemoUsers() {
 		List<Account> accounts = accountRepository.findAll();
-		// assert
-		// 2 accounts que se han introducido en la BD a través del método intialize() y otros 2 que se meten por defecto en la aplicación
-		assertEquals(accounts.size(), 4);
+		// 1 account que se ha introducido en la BD a través del método intialize() y otros 2 que se meten por defecto en la aplicación
+		assertEquals(accounts.size(), 3);
 	}
 
-	//PR-UN-032
+	//PR-UN-005
 	@Test(expected=UsernameNotFoundException.class)
-	public void shouldThrowExceptionWhenUserNotFound() {
-		// arrange
-		accountRepository.findOneByEmail("user@example.com");
-		// act
-		accountService.loadUserByUsername("user2@example.com");
+	public void testLoadUserWithNotExistingUserName() {
+		accountService.loadUserByUsername("christian2@udc.es");
 	}
 
-	//PR-UN-033
+	//PR-UN-006
 	@Test
-	public void shouldReturnUserDetails() throws SaveNotAvailableException {
-		// arrange
-		accountRepository.findOneByEmail("user@example.com");
-
-		// act
-		UserDetails userDetails = accountService.loadUserByUsername("user@example.com");
-
-		// assert
-		assertThat(account.getEmail()).isEqualTo(userDetails.getUsername());
-		assertThat(account.getPassword()).isEqualTo(userDetails.getPassword());
-		assertThat(hasAuthority(userDetails, account.getRole())).isTrue();
+	public void testShouldReturnUserDetails() {
+		UserDetails userDetails = accountService.loadUserByUsername("christian@udc.es");
+		assertEquals(account5.getEmail(), userDetails.getUsername());
+		assertEquals(account5.getPassword(), userDetails.getPassword());
+		assertThat(hasAuthority(userDetails, account5.getRole())).isTrue();
+	}
+	
+	//PR-UN-007
+	@Test
+	public void testUpdate() throws SaveNotAvailableException {
+		account5.setUserName("pruebaUpdate");
+		accountService.update(account5);
+		assertEquals(account5.getUserName(), "pruebaUpdate");
 	}
 
 	private boolean hasAuthority(UserDetails userDetails, String role) {
@@ -110,9 +108,5 @@ public class AccountServiceTest {
 				.map(GrantedAuthority::getAuthority)
 				.anyMatch(isEqual(role));
 	}
-	
-	@After
-	public void endTest(){
-		account = null;
-	}
+
 }

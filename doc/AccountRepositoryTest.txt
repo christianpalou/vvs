@@ -10,12 +10,41 @@ DESTRUCCIÓN
 		- Tras finalizar la clase anotada con @Transactional, se borran todos los datos creados  en el método initialice de forma automática.
 
 PR-UN-001
-	Unidad:
-	Método: 
-	Motivación: 
+	Unidad: Account Repository
+	Método: Save
+	Motivación: Comprobar caso base
 	Valores de entrada:
 	Valores de salida:
 	Inicialización necesaria:
+		- Objeto Account (sin introducir en BD)
+				- Email: adri@udc.es
+				- Password: adri
+				- Role:ROLE_USER
+				- userName: adri
+PR-UN-002
+	Unidad: Account Repository
+	Método: FindOneByEmail
+	Motivación: Comprobar caso base
+	Valores de entrada:
+	Valores de salida:
+	Inicialización necesaria:
+		- Objeto Account (introducido en BD)
+				- Email: otero@udc.es
+				- Password: otero
+				- Role:ROLE_USER
+				- userName: otero
+PR-UN-003
+	Unidad: Account Repository
+	Método: FindOneByUserName
+	Motivación: Comprobar caso base
+	Valores de entrada:
+	Valores de salida:
+	Inicialización necesaria:
+		- Objeto Account (introducido en BD)
+				- Email: otero@udc.es
+				- Password: otero
+				- Role:ROLE_USER
+				- userName: otero
 
 
 

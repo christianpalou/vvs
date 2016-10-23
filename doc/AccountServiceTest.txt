@@ -10,9 +10,66 @@ DESTRUCCIÓN
 		- Tras finalizar la clase anotada con @Transactional, se borran todos los datos creados  en el método initialice de forma automática.
 
 PR-UN-001
-	Unidad:
-	Método: 
-	Motivación: 
+	Unidad: AccountService
+	Método: SaveAccount
+	Motivación: Comprobar que crea un objeto distinto de null y perteneciente a la clase Account.
 	Valores de entrada:
-	Valores de salida:
+		- Objeto Account
+	Valores de salida: Objeto Account
+	Inicialización necesaria: Objeto account
+	
+PR-UN-002
+	Unidad:  AccountService
+	Método: SaveBlogWithExistingEmail
+	Motivación: Comprobar que no se puedan crear dos accounts con el mismo Email.
+	Valores de entrada: Dos objetos Account con el mismo Email.
+	Valores de salida: Excepción SaveNotAvailableException.
 	Inicialización necesaria:
+			- 2 Objetos Account
+PR-UN-003
+	Unidad: AccountService
+	Método: SaveBlogWithExistingUserName
+	Motivación: Comprobar que no se puedan crear dos accounts con el mismo nombre de usuario.
+	Valores de entrada: 2 objetos Account con el mismo nombre de usuario.
+	Valores de salida: Excepción SaveNotAvailableException.
+	Inicialización necesaria:
+		- 2 Objetos Account
+
+PR-UN-004
+	Unidad: AccountService
+	Método: ShouldInitializeWithTwoDemoUsers
+	Motivación: Comprobar que se inicialicen los dos usuarios por defecto en la BD.
+	Valores de entrada: 
+	Valores de salida: Lista de Account con los usuarios introducidos en la BD.
+	Inicialización necesaria:
+		
+PR-UN-005
+	Unidad: AccountService
+	Método: LoadUserWithNotExistingUserName
+	Motivación: Comprobar que no se pueda cargar un usuario que no exista en la BD
+	Valores de entrada: 
+		- Objet String : Contiene un nombre de usuario inexistente en la BD
+	Valores de salida: Excepción UsernameNotFoundException.
+	Inicialización necesaria:
+
+PR-UN-006
+	Unidad: AccountService
+	Método: ShouldReturnUserDetails
+	Motivación: Comprobar que carga un usuario con los datos correctos.
+	Valores de entrada: 
+		- Objeto String : Contiene un nombre de usuario existente en la BD
+	Valores de salida: 
+		- Objeto User : Contiene los datos del objeto Account introducido en la BD.
+	Inicialización necesaria:
+		- Objetos Account (introducido en la BD)
+		
+PR-UN-007
+	Unidad: AccountService
+	Método: Update
+	Motivación: Comprobar que actualiza correctamente un Account en la BD.
+	Valores de entrada: 
+		- Objeto Account
+	Valores de salida: 
+		- Objeto Account (actualizado)
+	Inicialización necesaria:
+		- 1 Objeto Account (introducido en BD)
