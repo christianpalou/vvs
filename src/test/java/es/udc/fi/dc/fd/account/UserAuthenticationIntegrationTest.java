@@ -4,60 +4,55 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 
+import javax.transaction.Transactional;
+
 import org.junit.Assert;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 
 import es.udc.fi.dc.fd.config.WebSecurityConfigurationAware;
-import org.junit.After;
-import org.junit.Before;
-
+@Transactional
 public class UserAuthenticationIntegrationTest extends WebSecurityConfigurationAware {
 
-	private static String SEC_CONTEXT_ATTR;
+  @Autowired
+  AccountService accountService;
+  
+  private static String SEC_CONTEXT_ATTR = HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
 
-	String username;
-	String pass;
-	String pass2;
-	
-	@Before
-	public void intialize(){
-		username = "user@udc.es";
-		SEC_CONTEXT_ATTR = HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
-		pass = "demo";
-		pass2 = "invalid";
-	}
-	
+  @Test
+  public void requiresAuthentication() throws Exception {
+    mockMvc.perform(get("/account/current"))
+    .andExpect(redirectedUrl("http://localhost/signin"));
+  }
 
-	@Test
-	public void requiresAuthentication() throws Exception {
-		mockMvc.perform(get("/account/current"))
-		.andExpect(redirectedUrl("http://localhost/signin"));
-	}
+  /**
+   * Test que comprueba la autenticación de usuario
+   * @throws Exception excepción general
+   */
+  @Test
+  public void userAuthenticates() throws Exception {
+    final String username = "user3@udc.es";
+    final String password = "demo";
+    Account account= new Account(username, password, "ROLE_USER", username);
+    accountService.save(account);
 
-	@Test
-	public void userAuthenticates() throws Exception {
+    mockMvc.perform(post("/authenticate").param("username", username).param("password", "demo"))
+    .andExpect(redirectedUrl("/"))
+    .andExpect(r -> Assert.assertEquals(((SecurityContext) r.getRequest().getSession().getAttribute(SEC_CONTEXT_ATTR)).getAuthentication().getName(), username));
 
-		mockMvc.perform(post("/authenticate").param("username", username).param("password", pass))
-		.andExpect(redirectedUrl("/"))
-		.andExpect(r -> Assert.assertEquals(((SecurityContext) r.getRequest().getSession().getAttribute(SEC_CONTEXT_ATTR)).getAuthentication().getName(), username));
+  }
 
-	}
-
-
-	@Test
-	public void userAuthenticationFails() throws Exception {
-		mockMvc.perform(post("/authenticate").param("username", username).param("password", pass2))
-		.andExpect(redirectedUrl("/signin?error=1"))
-		.andExpect(r -> Assert.assertNull(r.getRequest().getSession().getAttribute(SEC_CONTEXT_ATTR)));
-	}
-	
-	@After
-	public void endTest(){
-		username = null;
-		SEC_CONTEXT_ATTR = null;
-		pass = null;
-		pass2 = null;
-	}
+  /**
+   * Test que comprueba fallo en autenticación
+   * @throws Exception excepción general
+   */
+  @Test
+  public void userAuthenticationFails() throws Exception {
+    final String username = "user3@udc.es";
+    mockMvc.perform(post("/authenticate").param("username", username).param("password", "invalid"))
+    .andExpect(redirectedUrl("/signin?error=1"))
+    .andExpect(r -> Assert.assertNull(r.getRequest().getSession().getAttribute(SEC_CONTEXT_ATTR)));
+  }
 }

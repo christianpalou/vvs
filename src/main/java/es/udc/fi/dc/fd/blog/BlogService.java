@@ -54,7 +54,7 @@ public class BlogService {
 		if (account==null){
 			throw new InstanceNotFoundException("La cuenta no existe");
 		}
-		if (accountId==blog.getAccount().getId()){
+		if (accountId.equals(blog.getAccount().getId())){
 			throw new FollowException("No se puede seguir a blog perteneciente");
 		}
 
@@ -103,7 +103,7 @@ public class BlogService {
 		if (isFollower(accountId,blogId)){
 			throw new FollowException("Blog ya seguido");
 		}
-		if (accountId==blog.getAccount().getId()){
+		if (accountId.equals(blog.getAccount().getId())){
 			throw new FollowException("No se puede seguir a blog perteneciente");
 		}
 		if (isFollowRequest(accountId,blogId)){
@@ -128,7 +128,7 @@ public class BlogService {
 		if (isFollower(accountId,blogId)){
 			throw new FollowException("Blog ya seguido");
 		}
-		if (accountId==blog.getAccount().getId()){
+		if (accountId.equals(blog.getAccount().getId())){
 			throw new FollowException("No se puede seguir a blog perteneciente");
 		}
 		if (isFollowRequest(accountId,blogId)){
@@ -160,7 +160,7 @@ public class BlogService {
 			throw new InstanceNotFoundException("La cuenta no existe");
 		}
 		for(Account follower: blog.getFollowers()){
-			if (follower.getId()==accountId){
+			if (follower.getId().equals(accountId)){
 				return true;
 			}
 		}
@@ -178,7 +178,7 @@ public class BlogService {
 			throw new InstanceNotFoundException("La cuenta no existe");
 		}
 		for(Account request: blog.getFollowRequests()){
-			if (request.getId()==accountId){
+			if (request.getId().equals(accountId)){
 				return true;
 			}
 		}

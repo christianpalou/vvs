@@ -186,7 +186,7 @@ public class AccountController {
 		Account otherAccount = accountRepository.findOne(id);
 		model.addAttribute("otheraccount", otherAccount);
 		boolean isUserFollowingBlogs = false;
-		if (account.getId() == otherAccount.getId()) {
+		if (account.getId().equals(otherAccount.getId())) {
 			isUserFollowingBlogs = true;
 		}
 		model.addAttribute("isUserFollowingBlogs", isUserFollowingBlogs);

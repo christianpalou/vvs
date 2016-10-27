@@ -77,7 +77,7 @@ public class BlogController {
 
 		boolean followButton = true;
 		boolean isOwner = false;
-		if (account.getId() == blog.getAccount().getId()) {
+		if (account.getId().equals(blog.getAccount().getId())) {
 			followButton = false;
 			isOwner = true;
 		}
@@ -118,7 +118,7 @@ public class BlogController {
 		model.addAttribute("account", account);
 		Blog blog = blogRepository.findOne(id);
 		boolean isOwner = false;
-		if (account.getId() == blog.getAccount().getId()) {
+		if (account.getId().equals(blog.getAccount().getId())) {
 			isOwner = true;
 		}
 		model.addAttribute("blog", blog);
