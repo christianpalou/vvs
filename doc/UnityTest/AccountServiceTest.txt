@@ -20,7 +20,7 @@ PR-UN-004
 	
 PR-UN-005
 	Unidad:  AccountService
-	Método: SaveBlogWithExistingEmail
+	Método: SaveAccountWithExistingEmail
 	Motivación: Comprobar que no se puedan crear dos accounts con el mismo Email.
 	Valores de entrada: Dos objetos Account con el mismo Email.
 	Valores de salida: Excepción SaveNotAvailableException.
@@ -28,7 +28,7 @@ PR-UN-005
 			- 2 Objetos Account
 PR-UN-006
 	Unidad: AccountService
-	Método: SaveBlogWithExistingUserName
+	Método: SaveAccountWithExistingUserName
 	Motivación: Comprobar que no se puedan crear dos accounts con el mismo nombre de usuario.
 	Valores de entrada: 2 objetos Account con el mismo nombre de usuario.
 	Valores de salida: Excepción SaveNotAvailableException.
