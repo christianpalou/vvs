@@ -9,7 +9,7 @@ DESTRUCCIÓN
 
 		- Tras finalizar la clase anotada con @Transactional, se borran todos los datos creados  en el método initialice de forma automática.
 
-PR-UN-001
+PR-UN-014
 	Unidad: BlogService
 	Método: SaveBlog
 	Motivación: Comprobar que crea un objeto distinto de null y perteneciente a la clsae Blog.
@@ -21,7 +21,7 @@ PR-UN-001
 		- Privacidad:false
 	Valores de salida: Objeto Blog
 	Inicialización necesaria: Objeto account
-PR-UN-002
+PR-UN-015
 	Unidad:  BlogService
 	Método:SaveBlog
 	Motivación: Comprobar que no se puedan crear dos blogs con el mismo nombre.
@@ -33,7 +33,7 @@ PR-UN-002
 				- Password: adri
 				- Role:ROLE_USER
 				- userName: adri
-PR-UN-003
+PR-UN-016
 	Unidad: BlogService
 	Método: UpdateBlog
 	Motivación:
@@ -54,7 +54,7 @@ PR-UN-003
 				- Role:ROLE_USER
 				- userName: adri
 
-PR-UN-004
+PR-UN-017
 	Unidad: BlogService
 	Método: Follow
 	Motivación: Probar el caso base
@@ -73,7 +73,7 @@ PR-UN-004
 				- Role:ROLE_USER
 				- userName: adri
 
-PR-UN-005
+PR-UN-018
 	Unidad: BlogService
 	Método:Follow
 	Motivación: Probar que no se puede seguir a un blog propio
@@ -91,7 +91,7 @@ PR-UN-005
 				- Password: adri
 				- Role:ROLE_USER
 				- userName: adri
-PR-UN-006
+PR-UN-019
 	Unidad: BlogService
 	Método:Follow
 	Motivación: Probar que no se puede volver a seguir a un blog
@@ -114,7 +114,7 @@ PR-UN-006
 				- Password: brais
 				- Role:ROLE_USER
 				- userName: brais
-PR-UN-007
+PR-UN-020
 	Unidad: BlogService
 	Método:Follow
 	Motivación: Probar que no se puede volver a seguir a un blog con peticiones pendientes
@@ -137,7 +137,7 @@ PR-UN-007
 				- Password: brais
 				- Role:ROLE_USER
 				- userName: brais
-PR-UN-008
+PR-UN-021
 	Unidad: BlogService
 	Método: Follow
 	Motivación: Probar a seguir un blog que no existe
@@ -149,7 +149,7 @@ PR-UN-008
 				- Password: adri
 				- Role:ROLE_USER
 				- userName: adri
-PR-UN-009
+PR-UN-022
 	Unidad: BlogService
 	Método: Follow
 	Motivación: Probar a seguir un blog desde una cuenta que no existe
@@ -162,7 +162,7 @@ PR-UN-009
 				- Descripción del blog: This is the blog of Adri.
 				- Cuenta de usuario:account
 				- Privacidad:false
-PR-UN-010
+PR-UN-023
 	Unidad: BlogService
 	Método: UnFollow
 	Motivación: Probar método en caso base
@@ -191,7 +191,7 @@ PR-UN-010
 				- Role:ROLE_USER
 				- userName: christian
 
-PR-UN-011
+PR-UN-024
 	Unidad: Blog Service
 	Método: Unfollow
 	Motivación: No se puede dejar de seguir un blog que no se seguía anteriormente
@@ -214,7 +214,7 @@ PR-UN-011
 				- Descripción del blog: This is the blog of Adri.
 				- Cuenta de usuario:account
 				- Privacidad:false
-PR-UN-012
+PR-UN-025
 	Unidad: Blog Service
 	Método: UnFollow
 	Motivación: Comprobar que no se puede dejar de seguir un blog que no existe
@@ -227,7 +227,7 @@ PR-UN-012
 				- Role:ROLE_USER
 				- userName: adri
 
-PR-UN-013
+PR-UN-026
 	Unidad: Blog Service
 	Método: UnFollow
 	Motivación: Comprobar que una cuenta que no existe no puede dejar de seguir a un blog
@@ -243,7 +243,7 @@ PR-UN-013
 				- Nombre del blog: MyBlog
 				- Titulo del blog: AdriBlog
 				- Descripción del blog: This is the blog of Adri.
-PR-UN-014
+PR-UN-027
 	Unidad: Blog Service
 	Método: AcceptFollowRequest
 	Motivación: Probar caso base
@@ -267,7 +267,7 @@ PR-UN-014
 				- Cuenta de usuario:account
 				- Privacidad:true
 
-PR-UN-015
+PR-UN-028
 	Unidad: Blog Service
 	Método:  AcceptFollowRequest
 	Motivación: Comprobar que no se puede aceptar la petición de una cuenta seguidora
@@ -291,7 +291,7 @@ PR-UN-015
 				- Cuenta de usuario:account
 				- Privacidad:true
 
-PR-UN-016
+PR-UN-029
 	Unidad: Blog Service
 	Método:  AcceptFollowRequest
 	Motivación: Comprobar que no se puede aceptar la petición de una cuenta propietaria
@@ -310,7 +310,7 @@ PR-UN-016
 				- Cuenta de usuario:account
 				- Privacidad:true
 
-PR-UN-017
+PR-UN-030
 	Unidad: Blog Service
 	Método:  AcceptFollowRequest
 	Motivación: Comprobar que no se puede aceptar la petición de una cuenta que no tenga una petición pendiente.
@@ -334,7 +334,7 @@ PR-UN-017
 				- Cuenta de usuario:account
 				- Privacidad:true
 
-PR-UN-018
+PR-UN-031
 	Unidad: Blog Service
 	Método: AcceptFollowRequest
 	Motivación: Aceptar peticiond e seguimiento de un blog que no existe
@@ -346,7 +346,7 @@ PR-UN-018
 				- Password: adri
 				- Role:ROLE_USER
 				- userName: adri
-PR-UN-019
+PR-UN-032
 	Unidad: Blog Service
 	Método: Comprobar que no se puede aceptar la petición de seguimiento de una cuenta que no existe
 	Motivación:
@@ -364,7 +364,7 @@ PR-UN-019
 				- Descripción del blog: This is the blog of Adri.
 				- Cuenta de usuario:account
 				- Privacidad:true
-PR-UN-020
+PR-UN-033
 	Unidad: Blog Service
 	Método: DenyFollowRequest
 	Motivación: Comprobar el caso base del método
@@ -388,7 +388,7 @@ PR-UN-020
 				- Cuenta de usuario:account
 				- Privacidad:true
 
-PR-UN-021
+PR-UN-034
 	Unidad: Blog Service
 	Método: DenyFollowRequest
 	Motivación: Comproba que no se puede denegar una petición de una cuenta seguidora
@@ -412,7 +412,7 @@ PR-UN-021
 				- Cuenta de usuario:account
 				- Privacidad:true
 
-PR-UN-022
+PR-UN-035
 	Unidad: Blog Service
 	Método: DenyFollowRequest
 	Motivación: Comprobar que no se puede denegar la petición de una cuenta propietaria
@@ -430,7 +430,7 @@ PR-UN-022
 				- Descripción del blog: This is the blog of Adri.
 				- Cuenta de usuario:account
 				- Privacidad:true
-PR-UN-023
+PR-UN-036
 	Unidad: Blog Service
 	Método: DenyFollowRequest
 	Motivación: Comprobar que no se puede denegar la petición de una cuenta que no tiene una petición pendiente
@@ -454,7 +454,7 @@ PR-UN-023
 				- Cuenta de usuario:account
 				- Privacidad:true
 
-PR-UN-024
+PR-UN-037
 	Unidad: Blog Service
 	Método: DenyFollowRequest
 	Motivación: Comprobar que no se puede denegar una petición de un blog que no existe
@@ -466,7 +466,7 @@ PR-UN-024
 				- Password: adri
 				- Role:ROLE_USER
 				- userName: adri
-PR-UN-025
+PR-UN-038
 	Unidad: Blog Service
 	Método: DenyFollowRequest
 	Motivación: Comprobar que no se puede denegar una petición de una cuenta que no existe.
@@ -484,7 +484,7 @@ PR-UN-025
 				- Descripción del blog: This is the blog of Adri.
 				- Cuenta de usuario:account
 				- Privacidad:true
-PR-UN-026
+PR-UN-039
 	Unidad: Blog Service
 	Método: findBlogByName
 	Motivación: Comprobar el caso base
@@ -501,7 +501,7 @@ PR-UN-026
 				- Titulo del blog: AdriBlog
 				- Descripción del blog: This is the blog of Adri.
 
-PR-UN-027
+PR-UN-040
 	Unidad: Blog Service
 	Método: findBlogByName
 	Motivación: Ampliar la comprobación del caso base
@@ -523,7 +523,7 @@ PR-UN-027
 				- Descripción del blog: This is the blog of Adri.
 				- Cuenta de usuario:account
 				- Privacidad:true
-PR-UN-028
+PR-UN-041
 	Unidad: Blog Service
 	Método:  IsFollower
 	Motivación: Comprobar caso base
@@ -547,7 +547,7 @@ PR-UN-028
 				- Role:ROLE_USER
 				- userName: brais
 
-PR-UN-029
+PR-UN-042
 	Unidad: Blog Service
 	Método:  IsFollower
 	Motivación: Comprobar que no se puede hacer IsFollower de un blog que no existe
@@ -559,7 +559,7 @@ PR-UN-029
 				- Password: adri
 				- Role:ROLE_USER
 				- userName: adri
-PR-UN-030
+PR-UN-043
 	Unidad: Blog Service
 	Método: IsFollower
 	Motivación: Comprobrar que no se puede hacer IsFollower de una cuenta que no existe
@@ -577,7 +577,7 @@ PR-UN-030
 				- Password: adri
 				- Role:ROLE_USER
 				- userName: adri
-PR-UN-031
+PR-UN-044
 	Unidad: Blog Service
 	Método: isFollowRequest
 	Motivación: Comprobar el caso base
@@ -600,7 +600,7 @@ PR-UN-031
 				- Password: brais
 				- Role:ROLE_USER
 				- userName: brais
-PR-UN-032
+PR-UN-045
 	Unidad: Blog Service
 	Método: isFollowRequest
 	Motivación: Comprobar que no se puede hacer IsFollowRequest de un blog que no existe
@@ -613,7 +613,7 @@ PR-UN-032
 				- Role:ROLE_USER
 				- userName: adri
 
-PR-UN-033
+PR-UN-046
 	Unidad: Blog Service
 	Método: isFollowRequest
 	Motivación: Comprobrar que no se puede hacer isFollowRequest de una cuenta que no existe
@@ -631,20 +631,5 @@ PR-UN-033
 				- Password: adri
 				- Role:ROLE_USER
 				- userName: adri
-
-
-
-
-PR-UN-034
-	Unidad: Blog Service
-	Método: 
-	Motivación:
-	Valores de entrada:
-	Valores de salida:
-	Inicialización necesaria:
-
-
-
-
 
 
