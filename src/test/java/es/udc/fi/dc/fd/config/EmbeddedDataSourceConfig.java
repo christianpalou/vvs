@@ -15,10 +15,8 @@ import javax.sql.DataSource;
 @Profile("test")
 public class EmbeddedDataSourceConfig {
 
-    @Bean
-    public DataSource dataSource() {
-        return new EmbeddedDatabaseBuilder()
-                .setType(EmbeddedDatabaseType.HSQL)
-                .build();
-    }
+  @Bean
+  public DataSource dataSource() {
+    return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.HSQL).build();
+  }
 }

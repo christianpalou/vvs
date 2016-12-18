@@ -11,10 +11,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 @Order(1)
 public class NoCsrfSecurityConfig extends SecurityConfig {
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        super.configure(http);
-        http.csrf().disable();
-    }
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    super.configure(http);
+    http.csrf().disable();
+  }
 
 }

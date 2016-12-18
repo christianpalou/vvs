@@ -1,12 +1,12 @@
 package es.udc.fi.dc.fd.config;
 
+import es.udc.fi.dc.fd.Application;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-
-import es.udc.fi.dc.fd.Application;
 
 @Configuration
 @PropertySource("classpath:persistence-pgsql.properties")
@@ -14,9 +14,9 @@ import es.udc.fi.dc.fd.Application;
 @ComponentScan(basePackageClasses = Application.class)
 public class ApplicationConfig {
 
-	@Bean
-	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-		return new PropertySourcesPlaceholderConfigurer();
-	}
+  @Bean
+  public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+    return new PropertySourcesPlaceholderConfigurer();
+  }
 
 }

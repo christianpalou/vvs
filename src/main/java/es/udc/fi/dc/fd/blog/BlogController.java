@@ -1,8 +1,7 @@
 package es.udc.fi.dc.fd.blog;
 
-import java.security.Principal;
-
-import javax.validation.Valid;
+import es.udc.fi.dc.fd.account.Account;
+import es.udc.fi.dc.fd.account.AccountRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,150 +17,199 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import es.udc.fi.dc.fd.account.Account;
-import es.udc.fi.dc.fd.account.AccountRepository;
+import java.security.Principal;
+
+import javax.validation.Valid;
 
 @Controller
 public class BlogController {
 
-	@Autowired
-	private CreateBlogFormValidator createBlogValidator;
+  @Autowired
+  private CreateBlogFormValidator createBlogValidator;
 
-	@Autowired
-	private BlogService blogService;
+  @Autowired
+  private BlogService blogService;
 
-	@Autowired
-	private AccountRepository accountRepository;
+  @Autowired
+  private AccountRepository accountRepository;
 
-	@Autowired
-	private BlogRepository blogRepository;
+  @Autowired
+  private BlogRepository blogRepository;
+/**
+ * 
+ * @param principal
+ * @param model
+ * @return
+ */
+  @RequestMapping(value = "/createBlog", method = RequestMethod.GET)
+  @ResponseStatus(value = HttpStatus.OK)
+  @Secured({ "ROLE_USER", "ROLE_ADMIN" })
+  public String createBlog(Principal principal, Model model) {
+    Account account = accountRepository.findOneByEmail(principal.getName());
+    model.addAttribute("account", account);
+    model.addAttribute(new CreateBlogForm());
+    return "blog/createBlog";
+  }
+/**
+ * 
+ * @param createBlogForm
+ * @param errors
+ * @param ra
+ * @param principal
+ * @param model
+ * @return
+ */
+  @RequestMapping(value = "/createBlog", method = RequestMethod.POST)
+  @Secured({ "ROLE_USER", "ROLE_ADMIN" })
+  public String createBlog(@Valid @ModelAttribute CreateBlogForm createBlogForm, Errors errors,
+      RedirectAttributes ra, Principal principal, Model model) {
+    Account account = accountRepository.findOneByEmail(principal.getName());
+    model.addAttribute("account", account);
+    createBlogValidator.validate(createBlogForm, errors);
+    if (errors.hasErrors()) {
+      return "blog/createBlog";
+    }
+    Blog blog1 = createBlogForm.createBlog();
+    try {
+      blog1.setAccount(account);
+      blogService.save(blog1);
+    } catch (SaveNotAvailableException exception) {
+      return "blog/createBlog";
+    }
+    return "redirect:/";
+  }
+/**
+ * 
+ * @param principal
+ * @param id
+ * @param model
+ * @return
+ */
+  @RequestMapping(value = "/blog/{id}", method = RequestMethod.GET)
+  @Secured({ "ROLE_USER", "ROLE_ADMIN" })
+  public String blog(Principal principal, @PathVariable Long id, Model model) {
+    Account account = accountRepository.findOneByEmail(principal.getName());
+    model.addAttribute("account", account);
 
-	@RequestMapping(value = "/createBlog", method = RequestMethod.GET)
-	@ResponseStatus(value = HttpStatus.OK)
-	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
-	public String createBlog(Principal principal, Model model) {
-		Account account = accountRepository.findOneByEmail(principal.getName());
-		model.addAttribute("account", account);
-		model.addAttribute(new CreateBlogForm());
-		return "blog/createBlog";
-	}
+    Blog blog = blogRepository.findOne(id);
+    model.addAttribute(blog);
 
-	@RequestMapping(value = "/createBlog", method = RequestMethod.POST)
-	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
-	public String createBlog(@Valid @ModelAttribute CreateBlogForm createBlogForm, Errors errors, RedirectAttributes ra,
-			Principal principal, Model model) {
-		Account account = accountRepository.findOneByEmail(principal.getName());
-		model.addAttribute("account", account);
-		createBlogValidator.validate(createBlogForm, errors);
-		if (errors.hasErrors()) {
-			return "blog/createBlog";
-		}
-		Blog blog1 = createBlogForm.createBlog();
-		try {
-			blog1.setAccount(account);
-			blogService.save(blog1);
-		} catch (SaveNotAvailableException e) {
-			return "blog/createBlog";
-		}
-		return "redirect:/";
-	}
-
-	@RequestMapping(value = "/blog/{id}", method = RequestMethod.GET)
-	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
-	public String blog(Principal principal, @PathVariable Long id, Model model) {
-		Account account = accountRepository.findOneByEmail(principal.getName());
-		model.addAttribute("account", account);
-
-		Blog blog = blogRepository.findOne(id);
-		model.addAttribute(blog);
-
-		boolean followButton = true;
-		boolean isOwner = false;
-		if (account.getId().equals(blog.getAccount().getId())) {
-			followButton = false;
-			isOwner = true;
-		}
-		boolean unfollowButton = false;
-		try {
-			if (blogService.isFollower(account.getId(), id)) {
-				unfollowButton = true;
-				followButton = false;
-			}
-			if (blogService.isFollowRequest(account.getId(), id)) {
-				followButton = false;
-			}
-		} catch (InstanceNotFoundException e) {
-			return "blog/blog";
-		}
-		model.addAttribute("followButton", followButton);
-		model.addAttribute("unfollowButton", unfollowButton);
-		model.addAttribute("isOwner", isOwner);
-		return "blog/blog";
-	}
-
-	@RequestMapping(value = "blog/{id}/followers", method = RequestMethod.GET)
-	@ResponseStatus(value = HttpStatus.OK)
-	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
-	public String followers(Principal principal, @PathVariable("id") Long id, Model model) {
-		Account account = accountRepository.findOneByEmail(principal.getName());
-		model.addAttribute("account", account);
-		Blog blog = blogRepository.findOne(id);
-		model.addAttribute("blog", blog);
-		return "blog/followers";
-	}
-
-	@RequestMapping(value = "blog/{id}/followRequests", method = RequestMethod.GET)
-	@ResponseStatus(value = HttpStatus.OK)
-	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
-	public String followRequests(Principal principal, @PathVariable("id") Long id, Model model) {
-		Account account = accountRepository.findOneByEmail(principal.getName());
-		model.addAttribute("account", account);
-		Blog blog = blogRepository.findOne(id);
-		boolean isOwner = false;
-		if (account.getId().equals(blog.getAccount().getId())) {
-			isOwner = true;
-		}
-		model.addAttribute("blog", blog);
-		model.addAttribute("isOwner", isOwner);
-		return "blog/followRequests";
-	}
-
-	@RequestMapping(value = "blog/{blogId}", method = RequestMethod.POST)
-	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
-	public String follow(Principal principal, @PathVariable("blogId") Long blogId,
-			@RequestParam(required = false, value = "follow") String follow,
-			@RequestParam(required = false, value = "unfollow") String unfollow, Model model) {
-		Account account = accountRepository.findOneByEmail(principal.getName());
-		try {
-			if (follow != null && follow.equalsIgnoreCase("follow")) {
-				blogService.follow(account.getId(), blogId);
-			}
-			if (unfollow != null && unfollow.equalsIgnoreCase("unfollow")) {
-				blogService.unfollow(account.getId(), blogId);
-			}
-		} catch (FollowException | InstanceNotFoundException e) {
-			return "blog/blog";
-		}
-		return "redirect:/blog/" + blogId;
-	}
-
-	@RequestMapping(value = "blog/{blogId}/followRequests/{id}", method = RequestMethod.POST)
-	@Secured({ "ROLE_USER", "ROLE_ADMIN" })
-	public String answerFollowRequest(@PathVariable("blogId") Long blogId,
-			@RequestParam(required = false, value = "accept") String accept,
-			@RequestParam(required = false, value = "deny") String deny, @PathVariable("id") Long id,
-			Principal principal, Model model) {
-		try {
-			if (accept != null && accept.equalsIgnoreCase("accept")) {
-				blogService.acceptFollowRequest(id, blogId);
-			}
-			if (deny != null && deny.equalsIgnoreCase("deny")) {
-				blogService.denyFollowRequest(id, blogId);
-			}
-		} catch (FollowException | InstanceNotFoundException e) {
-			return "blog/followRequests";
-		}
-		return "redirect:/blog/" + blogId + "/followRequests";
-	}
+    boolean followButton = true;
+    boolean isOwner = false;
+    if (account.getId().equals(blog.getAccount().getId())) {
+      followButton = false;
+      isOwner = true;
+    }
+    boolean unfollowButton = false;
+    try {
+      if (blogService.isFollower(account.getId(), id)) {
+        unfollowButton = true;
+        followButton = false;
+      }
+      if (blogService.isFollowRequest(account.getId(), id)) {
+        followButton = false;
+      }
+    } catch (InstanceNotFoundException exception) {
+      return "blog/blog";
+    }
+    model.addAttribute("followButton", followButton);
+    model.addAttribute("unfollowButton", unfollowButton);
+    model.addAttribute("isOwner", isOwner);
+    return "blog/blog";
+  }
+/**
+ * 
+ * @param principal
+ * @param id
+ * @param model
+ * @return
+ */
+  @RequestMapping(value = "blog/{id}/followers", method = RequestMethod.GET)
+  @ResponseStatus(value = HttpStatus.OK)
+  @Secured({ "ROLE_USER", "ROLE_ADMIN" })
+  public String followers(Principal principal, @PathVariable("id") Long id, Model model) {
+    Account account = accountRepository.findOneByEmail(principal.getName());
+    model.addAttribute("account", account);
+    Blog blog = blogRepository.findOne(id);
+    model.addAttribute("blog", blog);
+    return "blog/followers";
+  }
+/**
+ * 
+ * @param principal
+ * @param id
+ * @param model
+ * @return
+ */
+  @RequestMapping(value = "blog/{id}/followRequests", method = RequestMethod.GET)
+  @ResponseStatus(value = HttpStatus.OK)
+  @Secured({ "ROLE_USER", "ROLE_ADMIN" })
+  public String followRequests(Principal principal, @PathVariable("id") Long id, Model model) {
+    Account account = accountRepository.findOneByEmail(principal.getName());
+    model.addAttribute("account", account);
+    Blog blog = blogRepository.findOne(id);
+    boolean isOwner = false;
+    if (account.getId().equals(blog.getAccount().getId())) {
+      isOwner = true;
+    }
+    model.addAttribute("blog", blog);
+    model.addAttribute("isOwner", isOwner);
+    return "blog/followRequests";
+  }
+/**
+ * 
+ * @param principal
+ * @param blogId
+ * @param follow
+ * @param unfollow
+ * @param model
+ * @return
+ */
+  @RequestMapping(value = "blog/{blogId}", method = RequestMethod.POST)
+  @Secured({ "ROLE_USER", "ROLE_ADMIN" })
+  public String follow(Principal principal, @PathVariable("blogId") Long blogId,
+      @RequestParam(required = false, value = "follow") String follow,
+      @RequestParam(required = false, value = "unfollow") String unfollow, Model model) {
+    Account account = accountRepository.findOneByEmail(principal.getName());
+    try {
+      if (follow != null && follow.equalsIgnoreCase("follow")) {
+        blogService.follow(account.getId(), blogId);
+      }
+      if (unfollow != null && unfollow.equalsIgnoreCase("unfollow")) {
+        blogService.unfollow(account.getId(), blogId);
+      }
+    } catch (FollowException | InstanceNotFoundException exception) {
+      return "blog/blog";
+    }
+    return "redirect:/blog/" + blogId;
+  }
+/**
+ * 
+ * @param blogId
+ * @param accept
+ * @param deny
+ * @param id
+ * @param principal
+ * @param model
+ * @return
+ */
+  @RequestMapping(value = "blog/{blogId}/followRequests/{id}", method = RequestMethod.POST)
+  @Secured({ "ROLE_USER", "ROLE_ADMIN" })
+  public String answerFollowRequest(@PathVariable("blogId") Long blogId,
+      @RequestParam(required = false, value = "accept") String accept,
+      @RequestParam(required = false, value = "deny") String deny, @PathVariable("id") Long id,
+      Principal principal, Model model) {
+    try {
+      if (accept != null && accept.equalsIgnoreCase("accept")) {
+        blogService.acceptFollowRequest(id, blogId);
+      }
+      if (deny != null && deny.equalsIgnoreCase("deny")) {
+        blogService.denyFollowRequest(id, blogId);
+      }
+    } catch (FollowException | InstanceNotFoundException exception) {
+      return "blog/followRequests";
+    }
+    return "redirect:/blog/" + blogId + "/followRequests";
+  }
 
 }

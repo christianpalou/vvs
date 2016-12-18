@@ -7,23 +7,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-import org.junit.Test;
-
 import es.udc.fi.dc.fd.config.WebAppConfigurationAware;
 
-public class SignupControllerTest extends WebAppConfigurationAware {
-	
+import org.junit.Test;
 
-	@Test
-	public void displaysSignupForm() throws Exception {
-		mockMvc.perform(get("/signup"))
-		.andExpect(model().attributeExists("signupForm"))
-		.andExpect(view().name("signup/signup"))
-		.andExpect(content().string(
-				allOf(
-						containsString("<title>Signup</title>"),
-						containsString("<legend>Please Sign Up</legend>")
-						))
-				);
-	}
+public class SignupControllerTest extends WebAppConfigurationAware {
+
+  @Test
+  public void displaysSignupForm() throws Exception {
+    mockMvc.perform(get("/signup")).andExpect(model().attributeExists("signupForm"))
+        .andExpect(view().name("signup/signup"))
+        .andExpect(content().string(allOf(containsString("<title>Signup</title>"),
+            containsString("<legend>Please Sign Up</legend>"))));
+  }
 }

@@ -1,7 +1,9 @@
 package es.udc.fi.dc.fd.finds;
 
-import java.security.Principal;
-import java.util.List;
+import es.udc.fi.dc.fd.account.Account;
+import es.udc.fi.dc.fd.account.AccountRepository;
+import es.udc.fi.dc.fd.blog.Blog;
+import es.udc.fi.dc.fd.blog.BlogService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,29 +15,34 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import es.udc.fi.dc.fd.account.Account;
-import es.udc.fi.dc.fd.account.AccountRepository;
-import es.udc.fi.dc.fd.blog.Blog;
-import es.udc.fi.dc.fd.blog.BlogService;
+import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class FindsController {
 
-	@Autowired
-	private BlogService blogService;
+  @Autowired
+  private BlogService blogService;
 
-	@Autowired
-	private AccountRepository accountRepository;
-
-	@RequestMapping(value = "finds", method = RequestMethod.GET)
-	@ResponseStatus(value = HttpStatus.OK)
-	@Secured({"ROLE_USER", "ROLE_ADMIN"})
-	public String findBlogs(@RequestParam(required = false, value = "keywords") String keywords, Model model, Principal principal) {
-		Account account = accountRepository.findOneByEmail(principal.getName());
-		model.addAttribute("account",account);
-		model.addAttribute("search", keywords);
-		List<Blog> foundBlogs= blogService.findBlogs(keywords);
-		model.addAttribute("foundBlogs", foundBlogs);
-		return "finds/finds";
-	}
+  @Autowired
+  private AccountRepository accountRepository;
+/**
+ * 
+ * @param keywords
+ * @param model
+ * @param principal
+ * @return
+ */
+  @RequestMapping(value = "finds", method = RequestMethod.GET)
+  @ResponseStatus(value = HttpStatus.OK)
+  @Secured({ "ROLE_USER", "ROLE_ADMIN" })
+  public String findBlogs(@RequestParam(required = false, value = "keywords") String keywords,
+      Model model, Principal principal) {
+    Account account = accountRepository.findOneByEmail(principal.getName());
+    model.addAttribute("account", account);
+    model.addAttribute("search", keywords);
+    List<Blog> foundBlogs = blogService.findBlogs(keywords);
+    model.addAttribute("foundBlogs", foundBlogs);
+    return "finds/finds";
+  }
 }

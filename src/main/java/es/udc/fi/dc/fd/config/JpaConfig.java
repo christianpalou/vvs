@@ -1,9 +1,9 @@
 package es.udc.fi.dc.fd.config;
 
-import java.util.Properties;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
-import javax.persistence.EntityManagerFactory;
-import javax.sql.DataSource;
+import es.udc.fi.dc.fd.Application;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -17,65 +17,65 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.util.ClassUtils;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
+import java.util.Properties;
 
-import es.udc.fi.dc.fd.Application;
+import javax.persistence.EntityManagerFactory;
+import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackageClasses = Application.class)
 class JpaConfig {
 
-	@Value("${dataSource.driverClassName}")
-	private String driver;
-	@Value("${dataSource.url}")
-	private String url;
-	@Value("${dataSource.username}")
-	private String username;
-	@Value("${dataSource.password}")
-	private String password;
-	@Value("${hibernate.dialect}")
-	private String dialect;
-	@Value("${hibernate.hbm2ddl.auto}")
-	private String hbm2ddlAuto;
+  @Value("${dataSource.driverClassName}")
+  private String driver;
+  @Value("${dataSource.url}")
+  private String url;
+  @Value("${dataSource.username}")
+  private String username;
+  @Value("${dataSource.password}")
+  private String password;
+  @Value("${hibernate.dialect}")
+  private String dialect;
+  @Value("${hibernate.hbm2ddl.auto}")
+  private String hbm2ddlAuto;
 
-	@Bean
-	public DataSource dataSource() {
-		HikariConfig config = new HikariConfig();
-		config.setDriverClassName(driver);
-		config.setJdbcUrl(url);
-		config.setUsername(username);
-		config.setPassword(password);
-		config.addDataSourceProperty("cachePrepStmts", "true");
-		config.addDataSourceProperty("prepStmtCacheSize", "250");
-		config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-		config.addDataSourceProperty("useServerPrepStmts", "true");
+  @Bean
+  public DataSource dataSource() {
+    HikariConfig config = new HikariConfig();
+    config.setDriverClassName(driver);
+    config.setJdbcUrl(url);
+    config.setUsername(username);
+    config.setPassword(password);
+    config.addDataSourceProperty("cachePrepStmts", "true");
+    config.addDataSourceProperty("prepStmtCacheSize", "250");
+    config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+    config.addDataSourceProperty("useServerPrepStmts", "true");
 
-		return new HikariDataSource(config);
-	}
+    return new HikariDataSource(config);
+  }
 
-	@Bean
-	public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
-		LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
-		entityManagerFactoryBean.setDataSource(dataSource);
+  @Bean
+  public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
+    LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
+    entityManagerFactoryBean.setDataSource(dataSource);
 
-		String entities = ClassUtils.getPackageName(Application.class);
-		String converters = ClassUtils.getPackageName(Jsr310JpaConverters.class);
-		entityManagerFactoryBean.setPackagesToScan(entities, converters);
+    String entities = ClassUtils.getPackageName(Application.class);
+    String converters = ClassUtils.getPackageName(Jsr310JpaConverters.class);
+    entityManagerFactoryBean.setPackagesToScan(entities, converters);
 
-		entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+    entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 
-		Properties jpaProperties = new Properties();
-		jpaProperties.put(org.hibernate.cfg.Environment.DIALECT, dialect);
-		jpaProperties.put(org.hibernate.cfg.Environment.HBM2DDL_AUTO, hbm2ddlAuto);
-		entityManagerFactoryBean.setJpaProperties(jpaProperties);
+    Properties jpaProperties = new Properties();
+    jpaProperties.put(org.hibernate.cfg.Environment.DIALECT, dialect);
+    jpaProperties.put(org.hibernate.cfg.Environment.HBM2DDL_AUTO, hbm2ddlAuto);
+    entityManagerFactoryBean.setJpaProperties(jpaProperties);
 
-		return entityManagerFactoryBean;
-	}
+    return entityManagerFactoryBean;
+  }
 
-	@Bean
-	public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
-		return new JpaTransactionManager(entityManagerFactory);
-	}
+  @Bean
+  public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+    return new JpaTransactionManager(entityManagerFactory);
+  }
 }

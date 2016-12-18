@@ -8,19 +8,19 @@ import org.springframework.validation.Validator;
 @Component
 public class AccountConfigurationFormValidator implements Validator {
 
-	@Autowired
-	private AccountRepository accountRepository;
+  @Autowired
+  private AccountRepository accountRepository;
 
-	@Override
-	public boolean supports(Class<?> clazz) {
-		return AccountConfigurationForm.class.isAssignableFrom(clazz);
-	}
+  @Override
+  public boolean supports(Class<?> clazz) {
+    return AccountConfigurationForm.class.isAssignableFrom(clazz);
+  }
 
-	@Override
-	public void validate(Object target, Errors errors) {
-		AccountConfigurationForm signupForm = (AccountConfigurationForm) target;
-		if (accountRepository.findOneByUserName(signupForm.getUserName()) != null){
-			errors.rejectValue("userName", "accountUserName.message");
-		}
-	}
+  @Override
+  public void validate(Object target, Errors errors) {
+    AccountConfigurationForm signupForm = (AccountConfigurationForm) target;
+    if (accountRepository.findOneByUserName(signupForm.getUserName()) != null) {
+      errors.rejectValue("userName", "accountUserName.message");
+    }
+  }
 }
