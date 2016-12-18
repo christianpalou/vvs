@@ -9,7 +9,7 @@ DESTRUCCIÓN
 
 		- Tras finalizar la clase anotada con @Transactional, se borran todos los datos creados  en el método initialice de forma automática.
 
-PR-UN-001
+PR-UN-011
 	Unidad: Blog Repository
 	Método: Save
 	Motivación: Comprobar caso base
@@ -27,7 +27,7 @@ PR-UN-001
 				- Password: adri
 				- Role:ROLE_USER
 				- userName: adri
-PR-UN-002
+PR-UN-012
 	Unidad: Blog Repository
 	Método: FindOneByNameContaining
 	Motivación: Comprobar caso base
@@ -51,7 +51,7 @@ PR-UN-002
 				- Descripción del blog: This is the blog of Adri.
 				- Cuenta de usuario:account
 				- Privacidad:true
-PR-UN-003
+PR-UN-013
 	Unidad: Blog Repository
 	Método: FindOneByName
 	Motivación: Comprobar caso base

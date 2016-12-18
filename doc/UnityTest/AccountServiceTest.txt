@@ -9,7 +9,7 @@ DESTRUCCIÓN
 
 		- Tras finalizar la clase anotada con @Transactional, se borran todos los datos creados  en el método initialice de forma automática.
 
-PR-UN-001
+PR-UN-004
 	Unidad: AccountService
 	Método: SaveAccount
 	Motivación: Comprobar que crea un objeto distinto de null y perteneciente a la clase Account.
@@ -18,24 +18,24 @@ PR-UN-001
 	Valores de salida: Objeto Account
 	Inicialización necesaria: Objeto account
 	
-PR-UN-002
+PR-UN-005
 	Unidad:  AccountService
-	Método: SaveBlogWithExistingEmail
+	Método: SaveAccountWithExistingEmail
 	Motivación: Comprobar que no se puedan crear dos accounts con el mismo Email.
 	Valores de entrada: Dos objetos Account con el mismo Email.
 	Valores de salida: Excepción SaveNotAvailableException.
 	Inicialización necesaria:
 			- 2 Objetos Account
-PR-UN-003
+PR-UN-006
 	Unidad: AccountService
-	Método: SaveBlogWithExistingUserName
+	Método: SaveAccountWithExistingUserName
 	Motivación: Comprobar que no se puedan crear dos accounts con el mismo nombre de usuario.
 	Valores de entrada: 2 objetos Account con el mismo nombre de usuario.
 	Valores de salida: Excepción SaveNotAvailableException.
 	Inicialización necesaria:
 		- 2 Objetos Account
 
-PR-UN-004
+PR-UN-007
 	Unidad: AccountService
 	Método: ShouldInitializeWithTwoDemoUsers
 	Motivación: Comprobar que se inicialicen los dos usuarios por defecto en la BD.
@@ -43,7 +43,7 @@ PR-UN-004
 	Valores de salida: Lista de Account con los usuarios introducidos en la BD.
 	Inicialización necesaria:
 		
-PR-UN-005
+PR-UN-008
 	Unidad: AccountService
 	Método: LoadUserWithNotExistingUserName
 	Motivación: Comprobar que no se pueda cargar un usuario que no exista en la BD
@@ -52,7 +52,7 @@ PR-UN-005
 	Valores de salida: Excepción UsernameNotFoundException.
 	Inicialización necesaria:
 
-PR-UN-006
+PR-UN-009
 	Unidad: AccountService
 	Método: ShouldReturnUserDetails
 	Motivación: Comprobar que carga un usuario con los datos correctos.
@@ -63,7 +63,7 @@ PR-UN-006
 	Inicialización necesaria:
 		- Objetos Account (introducido en la BD)
 		
-PR-UN-007
+PR-UN-010
 	Unidad: AccountService
 	Método: Update
 	Motivación: Comprobar que actualiza correctamente un Account en la BD.
