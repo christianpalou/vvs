@@ -40,11 +40,12 @@ public class BlogRepositoryTest {
   Blog blog1;
   Blog blog2;
   Blog blog3;
-/**
- * 
- * @throws es.udc.fi.dc.fd.account.SaveNotAvailableException
- * @throws SaveNotAvailableException
- */
+
+  /**
+   * 
+   * @throws es.udc.fi.dc.fd.account.SaveNotAvailableException
+   * @throws SaveNotAvailableException
+   */
   @Before
   public void initialice()
       throws es.udc.fi.dc.fd.account.SaveNotAvailableException, SaveNotAvailableException {

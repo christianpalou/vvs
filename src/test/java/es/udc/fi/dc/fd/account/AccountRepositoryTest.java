@@ -28,10 +28,11 @@ public class AccountRepositoryTest {
 
   Account account;
   Account account2;
-/**
- * 
- * @throws SaveNotAvailableException
- */
+
+  /**
+   * 
+   * @throws SaveNotAvailableException
+   */
   @Before
   public void initialice() throws SaveNotAvailableException {
     account = new Account("adri@udc.es", "adri", "ROLE_USER", "adri");

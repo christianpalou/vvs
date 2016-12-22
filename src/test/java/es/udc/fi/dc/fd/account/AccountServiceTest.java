@@ -43,10 +43,11 @@ public class AccountServiceTest {
   Account account3;
   Account account4;
   Account account5;
-/**
- * 
- * @throws SaveNotAvailableException
- */
+
+  /**
+   * 
+   * @throws SaveNotAvailableException
+   */
   @Before
   public void intialize() throws SaveNotAvailableException {
     account = new Account("user@example.com", "demo", "ROLE_USER", "demo");

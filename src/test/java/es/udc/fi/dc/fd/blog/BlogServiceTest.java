@@ -43,7 +43,8 @@ public class BlogServiceTest {
   Blog blog;
   Blog blog2;
 
-  /** Metdo de inicialización
+  /**
+   * Metdo de inicialización
    * 
    * @throws es.udc.fi.dc.fd.account.SaveNotAvailableException
    * @throws SaveNotAvailableException
